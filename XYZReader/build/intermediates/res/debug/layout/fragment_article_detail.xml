@@ -63,7 +63,7 @@
                         android:lineSpacingMultiplier="0.9"
                         android:paddingBottom="@dimen/detail_metabar_title_bottom_padding"
                         android:alpha="0.87"
-                        android:textSize="24sp"
+                        android:textSize="@dimen/detail_article_title_text_size"
                         android:textStyle="bold" />
 
                     <TextView
@@ -85,7 +85,7 @@
                     android:paddingBottom="@dimen/detail_body_bottom_margin"
                     android:alpha="0.87"
                     android:textColorLink="@color/theme_accent"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/detail_item_text_size" />
 
             </com.example.xyzreader.ui.MaxWidthLinearLayout>
         </FrameLayout>
