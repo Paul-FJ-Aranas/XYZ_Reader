@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?actionBarSize"
+    android:layout_marginLeft="@dimen/list_toolbar_side_margin"
+    android:layout_marginRight="@dimen/list_toolbar_side_margin"
+    android:elevation="4dp"
+    android:background="@color/theme_primary"
+    app:layout_collapseMode="pin">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/logo" />
+
+</android.support.v7.widget.Toolbar>
+
+
+<!-- From: file:/C:/Users/PaulAranas/AndroidStudioProjects/xyzreader/XYZReader/src/main/res/layout/toolbar.xml -->
