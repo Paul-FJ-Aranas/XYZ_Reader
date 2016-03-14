@@ -24,6 +24,6 @@
             android:src="@drawable/ic_arrow_back"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
     </FrameLayout>
-   
+
 </FrameLayout>
 

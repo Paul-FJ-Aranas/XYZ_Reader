@@ -24,7 +24,7 @@
             android:src="@drawable/ic_arrow_back"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
     </FrameLayout>
-   
+
 </FrameLayout>
 
 <!-- From: file:/C:/Users/PaulAranas/AndroidStudioProjects/xyzreader/XYZReader/src/main/res/layout/activity_article_detail.xml -->
