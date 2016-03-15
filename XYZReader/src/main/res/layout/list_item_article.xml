@@ -14,8 +14,9 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="65dp"
         android:layout_gravity="bottom"
+        android:paddingTop="6dp"
         android:background="@color/translucent">
 
         <TextView
