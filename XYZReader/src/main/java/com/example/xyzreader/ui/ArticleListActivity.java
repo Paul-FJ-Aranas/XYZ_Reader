@@ -67,8 +67,7 @@ public class ArticleListActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_article_list);
         if (Build.VERSION.SDK_INT >= 21) {
             Transition transition = TransitionInflater.from(this).inflateTransition(R.transition.shared_element_photo);
-            getWindow().setSharedElementExitTransition(transition);
-            getWindow().setSharedElementReenterTransition(transition);
+            getWindow().setSharedElementEnterTransition(transition);
             postponeEnterTransition();
         }
 

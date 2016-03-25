@@ -56,7 +56,6 @@ public class ArticleDetailActivity extends AppCompatActivity
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ActivityCompat.postponeEnterTransition(this);
             Transition transition = TransitionInflater.from(this).inflateTransition(R.transition.shared_element_photo);
-            getWindow().setSharedElementEnterTransition(transition);
             getWindow().setSharedElementReturnTransition(transition);
         }
 
