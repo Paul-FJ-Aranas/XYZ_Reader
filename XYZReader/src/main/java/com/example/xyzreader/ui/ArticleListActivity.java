@@ -1,5 +1,7 @@
 package com.example.xyzreader.ui;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.LoaderManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -8,7 +10,10 @@ import android.content.IntentFilter;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +23,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
+import android.transition.Fade;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
@@ -57,6 +65,13 @@ public class ArticleListActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_list);
+        if (Build.VERSION.SDK_INT >= 21) {
+            Transition transition = TransitionInflater.from(this).inflateTransition(R.transition.shared_element_photo);
+            getWindow().setSharedElementExitTransition(transition);
+            getWindow().setSharedElementReenterTransition(transition);
+            postponeEnterTransition();
+        }
+
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -121,10 +136,8 @@ public class ArticleListActivity extends AppCompatActivity implements
     };
 
 
-
-
     private void updateRefreshingUI() {
-      //  mSwipeRefreshLayout.setRefreshing(mIsRefreshing);
+        //  mSwipeRefreshLayout.setRefreshing(mIsRefreshing);
     }
 
     @Override
@@ -138,14 +151,16 @@ public class ArticleListActivity extends AppCompatActivity implements
         adapter.setHasStableIds(true);
         mRecyclerView.setAdapter(adapter);
         int columnCount = getResources().getInteger(R.integer.list_column_count);
-        StaggeredGridLayoutManager glm = new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL );
+        StaggeredGridLayoutManager glm = new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(glm);
     }
+
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mRecyclerView.setAdapter(null);
     }
+
 
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
         private Cursor mCursor;
@@ -169,39 +184,42 @@ public class ArticleListActivity extends AppCompatActivity implements
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(Intent.ACTION_VIEW,
-                            ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition()))));
+                   Intent intent = new Intent(Intent.ACTION_VIEW,
+                            ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition())));
+                    view.setTransitionName("article_photo");
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, vh.thumbnailView, "article_photo");
+                    startActivity(intent, options.toBundle());
                 }
             });
             return vh;
         }
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        mCursor.moveToPosition(position);
+        holder.titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
+        holder.subtitleView.setText(
+                DateUtils.getRelativeTimeSpanString(
+                        mCursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
+                        System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
+                        DateUtils.FORMAT_ABBREV_ALL).toString()
+                        + " by "
+                        + mCursor.getString(ArticleLoader.Query.AUTHOR));
 
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            mCursor.moveToPosition(position);
-            holder.titleView.setText(mCursor.getString(ArticleLoader.Query.TITLE));
-            holder.subtitleView.setText(
-                    DateUtils.getRelativeTimeSpanString(
-                            mCursor.getLong(ArticleLoader.Query.PUBLISHED_DATE),
-                            System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
-                            DateUtils.FORMAT_ABBREV_ALL).toString()
-                            + " by "
-                            + mCursor.getString(ArticleLoader.Query.AUTHOR));
-
-            Picasso.with(context).load(mCursor.getString(ArticleLoader.Query.THUMB_URL)).into(holder.thumbnailView);
+        Picasso.with(context).load(mCursor.getString(ArticleLoader.Query.THUMB_URL)).into(holder.thumbnailView);
+        startPostponedEnterTransition();
 
         /*    holder.thumbnailView.setImageUrl(
                    mCursor.getString(ArticleLoader.Query.THUMB_URL),
                     ImageLoaderHelper.getInstance(ArticleListActivity.this).getImageLoader());
             holder.thumbnailView.setAspectRatio(mCursor.getFloat(ArticleLoader.Query.ASPECT_RATIO));
             */
-        }
-
-        @Override
-        public int getItemCount() {
-            return mCursor.getCount();
-        }
     }
+
+    @Override
+    public int getItemCount() {
+        return mCursor.getCount();
+    }
+}
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView thumbnailView;

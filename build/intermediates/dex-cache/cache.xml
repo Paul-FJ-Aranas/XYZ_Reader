@@ -23,18 +23,18 @@
         <dex dex="C:\Users\PaulAranas\AndroidStudioProjects\xyzreader\XYZReader\build\intermediates\pre-dexed\debug\internal_impl-22.2.0-23d5f2c2d5d28333a4f1e5aa761b591a9922e494.jar" />
     </item>
     <item
-        jar="C:\Users\PaulAranas\AndroidStudioProjects\xyzreader\XYZReader\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.0\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
-        <dex dex="C:\Users\PaulAranas\AndroidStudioProjects\xyzreader\XYZReader\build\intermediates\pre-dexed\debug\classes-7618e4e43562418031294162b85b4724f1e64031.jar" />
-    </item>
-    <item
         jar="C:\Users\PaulAranas\AndroidStudioProjects\xyzreader\XYZReader\build\intermediates\exploded-aar\com.android.support\design\22.2.0\classes.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="fc63b820d54c8a27a3a614bdd93920e0076581c2">
         <dex dex="C:\Users\PaulAranas\AndroidStudioProjects\xyzreader\XYZReader\build\intermediates\pre-dexed\debug\classes-01154ba11fa17549e5899f7b6e6569ad5cce97e9.jar" />
+    </item>
+    <item
+        jar="C:\Users\PaulAranas\AndroidStudioProjects\xyzreader\XYZReader\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.0\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
+        <dex dex="C:\Users\PaulAranas\AndroidStudioProjects\xyzreader\XYZReader\build\intermediates\pre-dexed\debug\classes-7618e4e43562418031294162b85b4724f1e64031.jar" />
     </item>
     <item
         jar="C:\Users\PaulAranas\AndroidStudioProjects\xyzreader\XYZReader\libs\volley.jar"
