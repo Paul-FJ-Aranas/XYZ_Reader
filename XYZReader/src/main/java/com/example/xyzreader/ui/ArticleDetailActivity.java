@@ -3,31 +3,41 @@ package com.example.xyzreader.ui;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.LoaderManager;
+import android.app.SharedElementCallback;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.transition.Fade;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowInsets;
+import android.widget.ImageView;
 
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.example.xyzreader.data.ItemsContract;
 
+import java.util.List;
+import java.util.Map;
+
+import static com.example.xyzreader.ui.ArticleListActivity.CURRENT_POSITION;
+import static com.example.xyzreader.ui.ArticleListActivity.START_POSITION;
+
 /**
  * An activity representing a single Article detail screen, letting you swipe between articles.
  */
+
 public class ArticleDetailActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -43,9 +53,56 @@ public class ArticleDetailActivity extends AppCompatActivity
     private View mUpButtonContainer;
     private View mUpButton;
 
+
+    private ArticleDetailFragment mArticleDetailFragment;
+
+
+    private int mStartPosition;
+    private int mCurrentPosition;
+    private boolean isReturning;
+    private static final String CURRENT_PAGE_POSITION = "current_page_position";
+    private static final String TAG = ArticleDetailActivity.class.getSimpleName();
+
+
+    private final SharedElementCallback mCallback = new SharedElementCallback() {
+        @Override
+        public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+            if (isReturning) {
+                ImageView sharedElement = mArticleDetailFragment.getImageView();
+                if (sharedElement == null) {
+                    names.clear();
+                    sharedElements.clear();
+                } else if (mStartPosition != mCurrentPosition) {
+
+                    names.clear();
+                    names.add(sharedElement.getTransitionName());
+                    sharedElements.clear();
+                    sharedElements.put(sharedElement.getTransitionName(), sharedElement);
+                }
+            }
+        }
+    };
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mStartPosition = getIntent().getIntExtra(START_POSITION, 0);
+        Log.d(TAG, "mStartPosition: " + mStartPosition);
+        if (savedInstanceState == null) {
+            mCurrentPosition = mStartPosition;
+        } else {
+            mCurrentPosition = savedInstanceState.getInt(CURRENT_PAGE_POSITION);
+        }
+
+        // postpone the shared element transition until image is loaded
+        //postponeEnterTransition();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            postponeEnterTransition();
+            setEnterSharedElementCallback(mCallback);
+        }
+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().getDecorView().setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
@@ -56,7 +113,7 @@ public class ArticleDetailActivity extends AppCompatActivity
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ActivityCompat.postponeEnterTransition(this);
             Transition transition = TransitionInflater.from(this).inflateTransition(R.transition.shared_element_photo);
-            getWindow().setSharedElementReturnTransition(transition);
+
         }
 
         getLoaderManager().initLoader(0, null, this);
@@ -67,7 +124,6 @@ public class ArticleDetailActivity extends AppCompatActivity
         mPager.setPageMargin((int) TypedValue
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics()));
         mPager.setPageMarginDrawable(new ColorDrawable(0x22000000));
-
         mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageScrollStateChanged(int state) {
@@ -82,7 +138,7 @@ public class ArticleDetailActivity extends AppCompatActivity
                 if (mCursor != null) {
                     mCursor.moveToPosition(position);
                 }
-                mSelectedItemId = mCursor.getLong(ArticleLoader.Query._ID);
+                mCursor.getLong(ArticleLoader.Query._ID);
                 updateUpButtonPosition();
             }
         });
@@ -109,13 +165,28 @@ public class ArticleDetailActivity extends AppCompatActivity
                 }
             });
         }
-
         if (savedInstanceState == null) {
             if (getIntent() != null && getIntent().getData() != null) {
                 mStartId = ItemsContract.Items.getItemId(getIntent().getData());
                 mSelectedItemId = mStartId;
             }
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(CURRENT_PAGE_POSITION, mCurrentPosition);
+    }
+
+    @Override
+    public void finishAfterTransition() {
+        isReturning = true;
+        Intent data = new Intent();
+        data.putExtra(START_POSITION, mStartPosition);
+        data.putExtra(CURRENT_POSITION, mCurrentPosition);
+        setResult(RESULT_OK, data);
+        super.finishAfterTransition();
     }
 
     @Override
@@ -150,17 +221,12 @@ public class ArticleDetailActivity extends AppCompatActivity
         mPagerAdapter.notifyDataSetChanged();
     }
 
-    public void onUpButtonFloorChanged(long itemId, ArticleDetailFragment fragment) {
-        if (itemId == mSelectedItemId) {
-            mSelectedItemUpButtonFloor = fragment.getUpButtonFloor();
-            updateUpButtonPosition();
-        }
-    }
 
     private void updateUpButtonPosition() {
         int upButtonNormalBottom = mTopInset + mUpButton.getHeight();
         mUpButton.setTranslationY(Math.min(mSelectedItemUpButtonFloor - upButtonNormalBottom, 0));
     }
+
 
     private class MyPagerAdapter extends FragmentStatePagerAdapter {
         public MyPagerAdapter(FragmentManager fm) {
@@ -170,17 +236,18 @@ public class ArticleDetailActivity extends AppCompatActivity
         @Override
         public void setPrimaryItem(ViewGroup container, int position, Object object) {
             super.setPrimaryItem(container, position, object);
-            ArticleDetailFragment fragment = (ArticleDetailFragment) object;
-            if (fragment != null) {
-                mSelectedItemUpButtonFloor = fragment.getUpButtonFloor();
+            mArticleDetailFragment = (ArticleDetailFragment) object;
+            if (mArticleDetailFragment != null) {
+                mSelectedItemUpButtonFloor = mArticleDetailFragment.getUpButtonFloor();
                 updateUpButtonPosition();
+                mCurrentPosition = position;
             }
         }
 
         @Override
         public Fragment getItem(int position) {
             mCursor.moveToPosition(position);
-            return ArticleDetailFragment.newInstance(mCursor.getLong(ArticleLoader.Query._ID));
+            return ArticleDetailFragment.newInstance(mCursor.getLong(ArticleLoader.Query._ID), mStartPosition);
         }
 
         @Override
