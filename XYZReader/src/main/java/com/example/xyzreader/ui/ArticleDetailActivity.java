@@ -95,7 +95,7 @@ public class ArticleDetailActivity extends AppCompatActivity
             mCurrentPosition = savedInstanceState.getInt(CURRENT_PAGE_POSITION);
         }
 
-        // postpone the shared element transition until image is loaded
+
         //postponeEnterTransition();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             postponeEnterTransition();

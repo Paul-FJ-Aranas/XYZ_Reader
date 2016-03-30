@@ -84,7 +84,7 @@ public class ArticleListActivity extends AppCompatActivity implements
             @Override
             public boolean onPreDraw() {
                 mRecyclerView.getLayoutManager().findViewByPosition(currentPosition).getViewTreeObserver().removeOnPreDrawListener(this);
-                // TODO: figure out why it is necessary to request layout here in order to get a smooth transition.
+                
                 mRecyclerView.requestLayout();
                 startPostponedEnterTransition();
                 return true;
@@ -101,7 +101,7 @@ public class ArticleListActivity extends AppCompatActivity implements
                 currentPosition = mReenterPositions.getInt(CURRENT_POSITION);
                 if (startPosition != currentPosition) {
                     String transitionNewName = "article_photo" + currentPosition;
-                    View newSharedElement = mRecyclerView.getLayoutManager().findViewByPosition(currentPosition);
+                    View newSharedElement = mRecyclerView.findViewWithTag(R.id.thumbnail);
 
 
                     if (newSharedElement != null) {
@@ -112,7 +112,7 @@ public class ArticleListActivity extends AppCompatActivity implements
                     }
                     mReenterPositions = null;
                 } else {
-                    // If mTmpReenterState is null, then the activity is exiting.
+
                     View navBar = findViewById(android.R.id.navigationBarBackground);
                     View statusBar = findViewById(android.R.id.statusBarBackground);
                     if (navBar != null) {

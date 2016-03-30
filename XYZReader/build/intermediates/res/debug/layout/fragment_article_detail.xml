@@ -34,6 +34,7 @@
                     android:id="@+id/meta_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/theme_primary"
                     android:layout_gravity="bottom"
                     android:layout_marginBottom="@dimen/detail_metabar_vert_padding"
                     android:orientation="vertical"
