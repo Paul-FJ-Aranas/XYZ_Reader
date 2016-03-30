@@ -98,7 +98,7 @@ public class ArticleDetailActivity extends AppCompatActivity
 
         //postponeEnterTransition();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            postponeEnterTransition();
+            supportPostponeEnterTransition();
             setEnterSharedElementCallback(mCallback);
         }
 
@@ -111,9 +111,8 @@ public class ArticleDetailActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_article_detail);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ActivityCompat.postponeEnterTransition(this);
-            Transition transition = TransitionInflater.from(this).inflateTransition(R.transition.shared_element_photo);
 
+            Transition transition = TransitionInflater.from(this).inflateTransition(R.transition.shared_element_photo);
         }
 
         getLoaderManager().initLoader(0, null, this);
@@ -138,6 +137,8 @@ public class ArticleDetailActivity extends AppCompatActivity
                 if (mCursor != null) {
                     mCursor.moveToPosition(position);
                 }
+
+                mCurrentPosition = position;
                 mCursor.getLong(ArticleLoader.Query._ID);
                 updateUpButtonPosition();
             }
@@ -237,6 +238,7 @@ public class ArticleDetailActivity extends AppCompatActivity
         public void setPrimaryItem(ViewGroup container, int position, Object object) {
             super.setPrimaryItem(container, position, object);
             mArticleDetailFragment = (ArticleDetailFragment) object;
+
             if (mArticleDetailFragment != null) {
                 mSelectedItemUpButtonFloor = mArticleDetailFragment.getUpButtonFloor();
                 updateUpButtonPosition();

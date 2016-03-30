@@ -169,6 +169,7 @@ public class ArticleDetailFragment extends Fragment implements
                                 //  Palette p = Palette.generate(bitmap, 12);
                                 //  mMutedColor = p.getDarkMutedColor(0xFF333333);
                                 mPhotoView.setImageBitmap(imageContainer.getBitmap());
+
                             }
                         }
 
@@ -187,6 +188,7 @@ public class ArticleDetailFragment extends Fragment implements
             bodyView.setText("N/A");
         }
     }
+
     @Nullable
     ImageView getImageView() {
         if (isViewInBounds(getActivity().getWindow().getDecorView(), mPhotoView)) {
@@ -194,12 +196,12 @@ public class ArticleDetailFragment extends Fragment implements
         }
         return null;
     }
+
     private static boolean isViewInBounds(@NonNull View container, @NonNull View view) {
         Rect containerBounds = new Rect();
         container.getHitRect(containerBounds);
         return view.getLocalVisibleRect(containerBounds);
     }
-
 
 
     private void scheduleStartPostponedTransition(final View sharedElement) {

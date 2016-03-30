@@ -47,7 +47,7 @@ import java.util.Map;
  * touched, lead to a {@link ArticleDetailActivity} representing item details. On tablets, the
  * activity presents a grid of items as cards.
  */
-@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+
 public class ArticleListActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -84,7 +84,7 @@ public class ArticleListActivity extends AppCompatActivity implements
             @Override
             public boolean onPreDraw() {
                 mRecyclerView.getLayoutManager().findViewByPosition(currentPosition).getViewTreeObserver().removeOnPreDrawListener(this);
-                
+
                 mRecyclerView.requestLayout();
                 startPostponedEnterTransition();
                 return true;
@@ -266,6 +266,7 @@ public class ArticleListActivity extends AppCompatActivity implements
                             ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition())));
                     if (Build.VERSION.SDK_INT >= 21) {
                         intentToDetailActivity.putExtra(START_POSITION, vh.getAdapterPosition());
+
                         view.findViewById(R.id.thumbnail).setTransitionName("article_photo" + vh.getAdapterPosition());
 
 
