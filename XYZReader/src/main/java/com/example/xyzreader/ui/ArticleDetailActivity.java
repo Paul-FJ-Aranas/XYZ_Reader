@@ -75,9 +75,9 @@ public class ArticleDetailActivity extends AppCompatActivity
                 } else if (mStartPosition != mCurrentPosition) {
 
                     names.clear();
-                    names.add(sharedElement.getTransitionName());
+                    names.add(toString().valueOf(mSelectedItemId) + mCurrentPosition);
                     sharedElements.clear();
-                    sharedElements.put(sharedElement.getTransitionName(), sharedElement);
+                    sharedElements.put(names.get(0), sharedElement);
                 }
             }
         }
@@ -98,10 +98,14 @@ public class ArticleDetailActivity extends AppCompatActivity
 
         //postponeEnterTransition();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            supportPostponeEnterTransition();
+            postponeEnterTransition();
             setEnterSharedElementCallback(mCallback);
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
+            Transition transition = TransitionInflater.from(this).inflateTransition(R.transition.shared_element_photo);
+            getWindow().setSharedElementEnterTransition(transition);
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().getDecorView().setSystemUiVisibility(
@@ -110,10 +114,7 @@ public class ArticleDetailActivity extends AppCompatActivity
         }
 
         setContentView(R.layout.activity_article_detail);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
-            Transition transition = TransitionInflater.from(this).inflateTransition(R.transition.shared_element_photo);
-        }
 
         getLoaderManager().initLoader(0, null, this);
 
@@ -139,7 +140,7 @@ public class ArticleDetailActivity extends AppCompatActivity
                 }
 
                 mCurrentPosition = position;
-                mCursor.getLong(ArticleLoader.Query._ID);
+               mSelectedItemId =  mCursor.getLong(ArticleLoader.Query._ID);
                 updateUpButtonPosition();
             }
         });
@@ -242,7 +243,6 @@ public class ArticleDetailActivity extends AppCompatActivity
             if (mArticleDetailFragment != null) {
                 mSelectedItemUpButtonFloor = mArticleDetailFragment.getUpButtonFloor();
                 updateUpButtonPosition();
-                mCurrentPosition = position;
             }
         }
 

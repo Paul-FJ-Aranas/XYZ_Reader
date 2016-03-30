@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -59,6 +60,7 @@ public class ArticleListActivity extends AppCompatActivity implements
     static final String START_POSITION = "extra_start_position";
     static final String CURRENT_POSITION = "extra_current_position";
     int startPosition;
+    Cursor theCursor;
 
 
     /**
@@ -75,15 +77,15 @@ public class ArticleListActivity extends AppCompatActivity implements
         currentPosition = mReenterPositions.getInt(CURRENT_POSITION);
         int startPosition = mReenterPositions.getInt(START_POSITION);
         if (startPosition != currentPosition) {
+           postponeEnterTransition();
             mRecyclerView.scrollToPosition(currentPosition);
-            mRecyclerView.getLayoutManager().getChildAt(currentPosition).hasFocus();
 
         }
-        postponeEnterTransition();
-        mRecyclerView.getLayoutManager().findViewByPosition(currentPosition).getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+
+        mRecyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
-                mRecyclerView.getLayoutManager().findViewByPosition(currentPosition).getViewTreeObserver().removeOnPreDrawListener(this);
+                mRecyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
 
                 mRecyclerView.requestLayout();
                 startPostponedEnterTransition();
@@ -100,8 +102,9 @@ public class ArticleListActivity extends AppCompatActivity implements
                 startPosition = mReenterPositions.getInt(START_POSITION);
                 currentPosition = mReenterPositions.getInt(CURRENT_POSITION);
                 if (startPosition != currentPosition) {
-                    String transitionNewName = "article_photo" + currentPosition;
-                    View newSharedElement = mRecyclerView.findViewWithTag(R.id.thumbnail);
+                    theCursor.moveToPosition(currentPosition);
+                    String transitionNewName = toString().valueOf(theCursor.getLong(ArticleLoader.Query._ID)) + currentPosition;
+                    View newSharedElement = findViewById(R.id.thumbnail);
 
 
                     if (newSharedElement != null) {
@@ -131,12 +134,16 @@ public class ArticleListActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_article_list);
         setExitSharedElementCallback(mCallbackExit);
         if (Build.VERSION.SDK_INT >= 21) {
             Transition transition = TransitionInflater.from(this).inflateTransition(R.transition.shared_element_photo);
             getWindow().setSharedElementEnterTransition(transition);
+
         }
+
+
+        setContentView(R.layout.activity_article_list);
+
 
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -219,6 +226,7 @@ public class ArticleListActivity extends AppCompatActivity implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+        theCursor = cursor;
         Adapter adapter = new Adapter(cursor, this);
         adapter.setHasStableIds(true);
         mRecyclerView.setAdapter(adapter);
@@ -266,8 +274,7 @@ public class ArticleListActivity extends AppCompatActivity implements
                             ItemsContract.Items.buildItemUri(getItemId(vh.getAdapterPosition())));
                     if (Build.VERSION.SDK_INT >= 21) {
                         intentToDetailActivity.putExtra(START_POSITION, vh.getAdapterPosition());
-
-                        view.findViewById(R.id.thumbnail).setTransitionName("article_photo" + vh.getAdapterPosition());
+                        view.findViewById(R.id.thumbnail).setTransitionName(toString().valueOf(vh.getItemId()) + vh.getAdapterPosition());
 
 
                         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, view.findViewById(R.id.thumbnail),
@@ -301,7 +308,7 @@ public class ArticleListActivity extends AppCompatActivity implements
             holder.subtitleView.setText(subTitle);
 
             Picasso.with(context).load(mCursor.getString(ArticleLoader.Query.THUMB_URL)).into(holder.thumbnailView);
-
+            holder.thumbnailView.setTag(holder.getItemId() + position);
 
             // holder.thumbnailView.setTag("article_photo" +position);
             // Log.d("WWWW",holder.thumbnailView.toString());
