@@ -107,6 +107,7 @@ public class ArticleListActivity extends AppCompatActivity implements
                     View newSharedElement = findViewById(R.id.thumbnail);
 
 
+
                     if (newSharedElement != null) {
                         names.clear();
                         names.add(transitionNewName);
@@ -134,11 +135,10 @@ public class ArticleListActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setExitSharedElementCallback(mCallbackExit);
         if (Build.VERSION.SDK_INT >= 21) {
             Transition transition = TransitionInflater.from(this).inflateTransition(R.transition.shared_element_photo);
             getWindow().setSharedElementEnterTransition(transition);
-
+            setExitSharedElementCallback(mCallbackExit);
         }
 
 
@@ -229,10 +229,11 @@ public class ArticleListActivity extends AppCompatActivity implements
         theCursor = cursor;
         Adapter adapter = new Adapter(cursor, this);
         adapter.setHasStableIds(true);
-        mRecyclerView.setAdapter(adapter);
         int columnCount = getResources().getInteger(R.integer.list_column_count);
         StaggeredGridLayoutManager glm = new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(glm);
+        mRecyclerView.setAdapter(adapter);
+
     }
 
 
@@ -308,7 +309,7 @@ public class ArticleListActivity extends AppCompatActivity implements
             holder.subtitleView.setText(subTitle);
 
             Picasso.with(context).load(mCursor.getString(ArticleLoader.Query.THUMB_URL)).into(holder.thumbnailView);
-            holder.thumbnailView.setTag(holder.getItemId() + position);
+
 
             // holder.thumbnailView.setTag("article_photo" +position);
             // Log.d("WWWW",holder.thumbnailView.toString());
