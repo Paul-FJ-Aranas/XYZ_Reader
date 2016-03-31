@@ -104,7 +104,7 @@ public class ArticleListActivity extends AppCompatActivity implements
                 if (startPosition != currentPosition) {
                     theCursor.moveToPosition(currentPosition);
                     String transitionNewName = toString().valueOf(theCursor.getLong(ArticleLoader.Query._ID)) + currentPosition;
-                    View newSharedElement = findViewById(R.id.thumbnail);
+                    View newSharedElement = mRecyclerView.findViewHolderForPosition(currentPosition).itemView.findViewById(R.id.thumbnail);
 
 
 
