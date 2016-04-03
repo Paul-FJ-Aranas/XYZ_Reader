@@ -75,9 +75,8 @@ public class ArticleListActivity extends AppCompatActivity implements
         currentPosition = mReenterPositions.getInt(CURRENT_POSITION);
         int startPosition = mReenterPositions.getInt(START_POSITION);
         if (startPosition != currentPosition) {
-            postponeEnterTransition();
             mRecyclerView.scrollToPosition(currentPosition);
-
+            postponeEnterTransition();
         }
 
         mRecyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
@@ -264,7 +263,7 @@ public class ArticleListActivity extends AppCompatActivity implements
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    startPostponedEnterTransition();
                     currentPosition = vh.getAdapterPosition();
                     mRecyclerView.getLayoutManager().findViewByPosition(currentPosition).setTag("article_photo" + currentPosition);
                     Intent intentToDetailActivity = new Intent(Intent.ACTION_VIEW,
@@ -308,7 +307,7 @@ public class ArticleListActivity extends AppCompatActivity implements
                     .load(mCursor.getString(ArticleLoader.Query.THUMB_URL))
                     .into(holder.thumbnailView);
 
-        startPostponedEnterTransition();
+
         }
 
 
