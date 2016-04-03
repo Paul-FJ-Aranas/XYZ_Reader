@@ -2,7 +2,7 @@
     android:id="@+id/list_item_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="8dp">
+    android:layout_margin="1dp">
 
     <!--suppress AndroidLintContentDescription -->
     <ImageView
@@ -14,10 +14,10 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="65dp"
+        android:layout_height="68dp"
         android:layout_gravity="bottom"
         android:background="@color/translucent"
-        android:paddingTop="6dp">
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/article_title"
@@ -27,7 +27,7 @@
             android:alpha="0.87"
             android:ellipsize="end"
             android:gravity="center"
-            android:maxLines="2"
+            android:maxLines="1"
             android:paddingBottom="2dp"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"

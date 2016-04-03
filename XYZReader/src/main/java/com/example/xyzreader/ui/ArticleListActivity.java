@@ -1,6 +1,5 @@
 package com.example.xyzreader.ui;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.LoaderManager;
 import android.app.SharedElementCallback;
@@ -13,7 +12,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -77,7 +75,7 @@ public class ArticleListActivity extends AppCompatActivity implements
         currentPosition = mReenterPositions.getInt(CURRENT_POSITION);
         int startPosition = mReenterPositions.getInt(START_POSITION);
         if (startPosition != currentPosition) {
-           postponeEnterTransition();
+            postponeEnterTransition();
             mRecyclerView.scrollToPosition(currentPosition);
 
         }
@@ -105,7 +103,6 @@ public class ArticleListActivity extends AppCompatActivity implements
                     theCursor.moveToPosition(currentPosition);
                     String transitionNewName = toString().valueOf(theCursor.getLong(ArticleLoader.Query._ID)) + currentPosition;
                     View newSharedElement = mRecyclerView.findViewHolderForPosition(currentPosition).itemView.findViewById(R.id.thumbnail);
-
 
 
                     if (newSharedElement != null) {
@@ -136,6 +133,7 @@ public class ArticleListActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (Build.VERSION.SDK_INT >= 21) {
+            postponeEnterTransition();
             Transition transition = TransitionInflater.from(this).inflateTransition(R.transition.shared_element_photo);
             getWindow().setSharedElementEnterTransition(transition);
             setExitSharedElementCallback(mCallbackExit);
@@ -143,7 +141,6 @@ public class ArticleListActivity extends AppCompatActivity implements
 
 
         setContentView(R.layout.activity_article_list);
-
 
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -233,7 +230,6 @@ public class ArticleListActivity extends AppCompatActivity implements
         StaggeredGridLayoutManager glm = new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(glm);
         mRecyclerView.setAdapter(adapter);
-
     }
 
 
@@ -308,17 +304,13 @@ public class ArticleListActivity extends AppCompatActivity implements
 
             holder.subtitleView.setText(subTitle);
 
-            Picasso.with(context).load(mCursor.getString(ArticleLoader.Query.THUMB_URL)).into(holder.thumbnailView);
+            Picasso.with(context)
+                    .load(mCursor.getString(ArticleLoader.Query.THUMB_URL))
+                    .into(holder.thumbnailView);
 
-
-            // holder.thumbnailView.setTag("article_photo" +position);
-            // Log.d("WWWW",holder.thumbnailView.toString());
-        /*    holder.thumbnailView.setImageUrl(
-                   mCursor.getString(ArticleLoader.Query.THUMB_URL),
-                    ImageLoaderHelper.getInstance(ArticleListActivity.this).getImageLoader());
-            holder.thumbnailView.setAspectRatio(mCursor.getFloat(ArticleLoader.Query.ASPECT_RATIO));
-            */
+        startPostponedEnterTransition();
         }
+
 
         @Override
         public int getItemCount() {

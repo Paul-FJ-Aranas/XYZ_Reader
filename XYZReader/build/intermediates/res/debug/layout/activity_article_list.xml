@@ -9,6 +9,7 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <include layout="@layout/toolbar" />
 
     </android.support.design.widget.AppBarLayout>
@@ -24,9 +25,9 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:paddingBottom="28dp"
+            android:paddingTop="116dp"
             android:paddingLeft="@dimen/list_side_margin"
             android:paddingRight="@dimen/list_side_margin"
-            android:paddingTop="116dp"
             android:scrollbarStyle="outsideOverlay" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
@@ -43,6 +44,6 @@
         app:borderWidth="0dp"
         app:elevation="6dp"
         app:fabSize="normal"
-        app:pressedTranslationZ="12dp"/>
+        app:pressedTranslationZ="12dp" />
 
 </android.support.design.widget.CoordinatorLayout><!-- From: file:/C:/Users/PaulAranas/AndroidStudioProjects/xyzreader/XYZReader/src/main/res/layout/activity_article_list.xml -->
