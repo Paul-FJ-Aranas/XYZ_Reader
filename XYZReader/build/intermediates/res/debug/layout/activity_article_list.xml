@@ -31,19 +31,4 @@
             android:scrollbarStyle="outsideOverlay" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_marginBottom="16dp"
-        android:layout_marginRight="16dp"
-        android:color="@color/theme_accent"
-        app:backgroundTint="@color/theme_accent"
-        app:borderWidth="0dp"
-        app:elevation="6dp"
-        app:fabSize="normal"
-        app:pressedTranslationZ="12dp" />
-
 </android.support.design.widget.CoordinatorLayout><!-- From: file:/C:/Users/PaulAranas/AndroidStudioProjects/xyzreader/XYZReader/src/main/res/layout/activity_article_list.xml -->
