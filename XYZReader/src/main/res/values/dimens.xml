@@ -17,6 +17,5 @@
     <dimen name="list_image_height">250dp</dimen>
     <dimen name="list_item_rel_layout_height">68dp</dimen>
     <dimen name="list_item_rel_layout_padding">16dp</dimen>
-    <dimen name="list_item_textview_padding">2dp</dimen>
     <dimen name="list_item_subtitle_text_size">12sp</dimen>
 </resources>

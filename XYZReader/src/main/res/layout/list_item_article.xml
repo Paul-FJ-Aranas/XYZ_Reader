@@ -28,9 +28,6 @@
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:paddingBottom="@dimen/list_item_textview_padding"
-            android:paddingLeft="@dimen/list_item_textview_padding"
-            android:paddingRight="@dimen/list_item_textview_padding"
             android:textColor="#FFFFFF"
             android:textSize="@dimen/list_item_text_size" />
 
@@ -44,9 +41,6 @@
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:paddingBottom="@dimen/list_item_textview_padding"
-            android:paddingLeft="@dimen/list_item_textview_padding"
-            android:paddingRight="@dimen/list_item_textview_padding"
             android:singleLine="true"
             android:textColor="#FFFFFF"
             android:textSize="@dimen/list_item_subtitle_text_size" />

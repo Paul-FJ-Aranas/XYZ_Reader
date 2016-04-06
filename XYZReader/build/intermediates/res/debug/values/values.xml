@@ -284,7 +284,6 @@
     <dimen name="list_item_rel_layout_padding">16dp</dimen>
     <dimen name="list_item_subtitle_text_size">12sp</dimen>
     <dimen name="list_item_text_size">14sp</dimen>
-    <dimen name="list_item_textview_padding">2dp</dimen>
     <!-- From: file:/C:/Users/PaulAranas/AndroidStudioProjects/xyzreader/XYZReader/src/main/res/values/macro_layout.xml -->
     <eat-comment/>
     <dimen name="list_side_margin">16dp</dimen>
