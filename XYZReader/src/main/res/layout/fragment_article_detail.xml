@@ -26,7 +26,8 @@
                 <ImageView
                     android:id="@+id/photo"
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"
+                    android:background="@color/theme_primary"
+                    android:layout_height="275dp"
                     android:scaleType="centerCrop" />
             </FrameLayout>
 
@@ -49,6 +50,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:alpha="0.87"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
                         android:lineSpacingMultiplier="0.9"
                         android:paddingBottom="@dimen/detail_metabar_title_bottom_padding"
                         android:textColor="#FFFFFF"
@@ -57,6 +60,8 @@
                     <TextView
                         android:id="@+id/article_byline"
                         style="?android:attr/textAppearanceSmall"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:alpha="0.87"
@@ -79,17 +84,18 @@
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
-    <ImageButton
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/share_fab"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        app:fabSize="normal"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="@dimen/fab_margin"
         android:layout_marginRight="@dimen/fab_margin"
-        android:background="@drawable/add_fab_background"
         android:contentDescription="@string/action_share"
         android:elevation="@dimen/fab_elevation"
-        android:src="@drawable/ic_share"
-        android:stateListAnimator="@anim/fab_state_list_anim" />
+        android:translationZ="12dp"
+        app:backgroundTint="@color/theme_accent"
+        android:src="@drawable/ic_share" />
 
 </android.support.design.widget.CoordinatorLayout>

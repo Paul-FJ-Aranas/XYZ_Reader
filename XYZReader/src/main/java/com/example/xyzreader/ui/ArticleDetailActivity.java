@@ -15,6 +15,7 @@ import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Slide;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.util.Log;
@@ -43,16 +44,10 @@ public class ArticleDetailActivity extends AppCompatActivity
 
     private Cursor mCursor;
     private long mStartId;
-
     private long mSelectedItemId;
-
     private ViewPager mPager;
     private MyPagerAdapter mPagerAdapter;
-
-
     private ArticleDetailFragment mArticleDetailFragment;
-
-
     private int mStartPosition;
     private int mCurrentPosition;
     private boolean isReturning;
@@ -94,14 +89,13 @@ public class ArticleDetailActivity extends AppCompatActivity
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             postponeEnterTransition();
             setEnterSharedElementCallback(mCallback);
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Slide slide = new Slide();
+            slide.setDuration(300);
+            getWindow().setEnterTransition(slide);
 
             Transition transition = TransitionInflater.from(this).inflateTransition(R.transition.shared_element_photo);
             getWindow().setSharedElementEnterTransition(transition);
-        }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().getDecorView().setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
                             View.SYSTEM_UI_FLAG_LAYOUT_STABLE);

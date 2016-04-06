@@ -304,7 +304,7 @@ public class ArticleListActivity extends AppCompatActivity implements
             holder.subtitleView.setText(subTitle);
 
             Picasso.with(context)
-                    .load(mCursor.getString(ArticleLoader.Query.THUMB_URL))
+                    .load(mCursor.getString(ArticleLoader.Query.THUMB_URL)).placeholder(R.color.theme_primary)
                     .into(holder.thumbnailView);
 
 
