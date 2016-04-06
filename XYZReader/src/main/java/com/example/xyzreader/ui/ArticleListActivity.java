@@ -76,7 +76,9 @@ public class ArticleListActivity extends AppCompatActivity implements
         int startPosition = mReenterPositions.getInt(START_POSITION);
         if (startPosition != currentPosition) {
             mRecyclerView.scrollToPosition(currentPosition);
-            postponeEnterTransition();
+            if (Build.VERSION.SDK_INT >= 21) {
+                postponeEnterTransition();
+            }
         }
 
         mRecyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
@@ -85,13 +87,16 @@ public class ArticleListActivity extends AppCompatActivity implements
                 mRecyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
 
                 mRecyclerView.requestLayout();
-                startPostponedEnterTransition();
+                if (Build.VERSION.SDK_INT >= 21) {
+                    startPostponedEnterTransition();
+                }
                 return true;
             }
         });
 
     }
 
+    //Callback to remap shared element transition
     private final SharedElementCallback mCallbackExit = new SharedElementCallback() {
         @Override
         public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
@@ -137,11 +142,7 @@ public class ArticleListActivity extends AppCompatActivity implements
             getWindow().setSharedElementEnterTransition(transition);
             setExitSharedElementCallback(mCallbackExit);
         }
-
-
         setContentView(R.layout.activity_article_list);
-
-
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -190,13 +191,11 @@ public class ArticleListActivity extends AppCompatActivity implements
 
     }
 
-
     @Override
     protected void onStop() {
         super.onStop();
         unregisterReceiver(mRefreshingReceiver);
     }
-
 
     private boolean mIsRefreshing = false;
 
@@ -209,7 +208,6 @@ public class ArticleListActivity extends AppCompatActivity implements
             }
         }
     };
-
 
     private void updateRefreshingUI() {
         //  mSwipeRefreshLayout.setRefreshing(mIsRefreshing);
@@ -231,12 +229,10 @@ public class ArticleListActivity extends AppCompatActivity implements
         mRecyclerView.setAdapter(adapter);
     }
 
-
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mRecyclerView.setAdapter(null);
     }
-
 
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
         private Cursor mCursor;
@@ -263,7 +259,9 @@ public class ArticleListActivity extends AppCompatActivity implements
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startPostponedEnterTransition();
+                    if (Build.VERSION.SDK_INT >= 21) {
+                        startPostponedEnterTransition();
+                    }
                     currentPosition = vh.getAdapterPosition();
                     mRecyclerView.getLayoutManager().findViewByPosition(currentPosition).setTag("article_photo" + currentPosition);
                     Intent intentToDetailActivity = new Intent(Intent.ACTION_VIEW,

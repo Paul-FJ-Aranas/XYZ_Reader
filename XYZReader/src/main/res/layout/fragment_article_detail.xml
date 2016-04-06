@@ -60,8 +60,8 @@
                     <TextView
                         android:id="@+id/article_byline"
                         style="?android:attr/textAppearanceSmall"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
+                        android:layout_marginLeft="@dimen/text_margin_side"
+                        android:layout_marginRight="@dimen/text_margin_side"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:alpha="0.87"
@@ -94,7 +94,7 @@
         android:layout_marginRight="@dimen/fab_margin"
         android:contentDescription="@string/action_share"
         android:elevation="@dimen/fab_elevation"
-        android:translationZ="12dp"
+        android:translationZ="@dimen/fab_pressed_elevation"
         app:backgroundTint="@color/theme_accent"
         android:src="@drawable/ic_share" />
 

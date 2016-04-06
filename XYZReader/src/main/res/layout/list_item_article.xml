@@ -8,16 +8,16 @@
     <ImageView
         android:id="@+id/thumbnail"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="@dimen/list_image_height"
         android:background="@color/photo_placeholder"
         android:scaleType="centerCrop" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="68dp"
+        android:layout_height="@dimen/list_item_rel_layout_height"
         android:layout_gravity="bottom"
         android:background="@color/translucent"
-        android:padding="16dp">
+        android:padding="@dimen/list_item_rel_layout_padding">
 
         <TextView
             android:id="@+id/article_title"
@@ -28,9 +28,9 @@
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:paddingBottom="2dp"
-            android:paddingLeft="2dp"
-            android:paddingRight="2dp"
+            android:paddingBottom="@dimen/list_item_textview_padding"
+            android:paddingLeft="@dimen/list_item_textview_padding"
+            android:paddingRight="@dimen/list_item_textview_padding"
             android:textColor="#FFFFFF"
             android:textSize="@dimen/list_item_text_size" />
 
@@ -44,12 +44,12 @@
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:paddingBottom="2dp"
-            android:paddingLeft="2dp"
-            android:paddingRight="2dp"
+            android:paddingBottom="@dimen/list_item_textview_padding"
+            android:paddingLeft="@dimen/list_item_textview_padding"
+            android:paddingRight="@dimen/list_item_textview_padding"
             android:singleLine="true"
             android:textColor="#FFFFFF"
-            android:textSize="12sp" />
+            android:textSize="@dimen/list_item_subtitle_text_size" />
     </RelativeLayout>
 </FrameLayout>
 

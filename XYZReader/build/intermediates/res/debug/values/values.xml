@@ -271,6 +271,7 @@
     <dimen name="fab_elevation">6dp</dimen>
     <dimen name="fab_margin">24dp</dimen>
     <dimen name="fab_press_translation_z">12dp</dimen>
+    <dimen name="fab_pressed_elevation">12dp</dimen>
     <!-- From: file:/C:/Users/PaulAranas/AndroidStudioProjects/xyzreader/XYZReader/build/intermediates/exploded-aar/com.android.support/design/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <dimen name="fab_size_mini">40dp</dimen>
@@ -278,7 +279,12 @@
     <dimen name="fab_translation_z_pressed">6dp</dimen>
     <!-- From: file:/C:/Users/PaulAranas/AndroidStudioProjects/xyzreader/XYZReader/src/main/res/values/dimens.xml -->
     <eat-comment/>
+    <dimen name="list_image_height">250dp</dimen>
+    <dimen name="list_item_rel_layout_height">68dp</dimen>
+    <dimen name="list_item_rel_layout_padding">16dp</dimen>
+    <dimen name="list_item_subtitle_text_size">12sp</dimen>
     <dimen name="list_item_text_size">14sp</dimen>
+    <dimen name="list_item_textview_padding">2dp</dimen>
     <!-- From: file:/C:/Users/PaulAranas/AndroidStudioProjects/xyzreader/XYZReader/src/main/res/values/macro_layout.xml -->
     <eat-comment/>
     <dimen name="list_side_margin">16dp</dimen>
@@ -297,6 +303,10 @@
     <dimen name="notification_large_icon_height">64dp</dimen>
     <dimen name="notification_large_icon_width">64dp</dimen>
     <dimen name="notification_subtext_size">12dp</dimen>
+    <!-- From: file:/C:/Users/PaulAranas/AndroidStudioProjects/xyzreader/XYZReader/src/main/res/values/dimens.xml -->
+    <eat-comment/>
+    <dimen name="recycler_padding_bottom">28dp</dimen>
+    <dimen name="recycler_padding_top">116dp</dimen>
     <!-- From: file:/C:/Users/PaulAranas/AndroidStudioProjects/xyzreader/XYZReader/build/intermediates/exploded-aar/com.android.support/design/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <dimen name="snackbar_action_inline_max_width">128dp</dimen>
@@ -311,6 +321,9 @@
     <dimen name="snackbar_text_size">14sp</dimen>
     <dimen name="tab_max_width">264dp</dimen>
     <dimen name="tab_min_width">72dp</dimen>
+    <!-- From: file:/C:/Users/PaulAranas/AndroidStudioProjects/xyzreader/XYZReader/src/main/res/values/dimens.xml -->
+    <eat-comment/>
+    <dimen name="text_margin_side">16dp</dimen>
     <!-- From: file:/C:/Users/PaulAranas/AndroidStudioProjects/xyzreader/XYZReader/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <drawable name="notification_template_icon_bg">#3333B5E5</drawable>

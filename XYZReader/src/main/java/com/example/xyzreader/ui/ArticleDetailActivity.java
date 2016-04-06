@@ -15,6 +15,7 @@ import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Fade;
 import android.transition.Slide;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
@@ -54,7 +55,7 @@ public class ArticleDetailActivity extends AppCompatActivity
     private static final String CURRENT_PAGE_POSITION = "current_page_position";
     private static final String TAG = ArticleDetailActivity.class.getSimpleName();
 
-
+    //Callback to remap shared element transition
     private final SharedElementCallback mCallback = new SharedElementCallback() {
         @Override
         public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
@@ -89,9 +90,12 @@ public class ArticleDetailActivity extends AppCompatActivity
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             postponeEnterTransition();
             setEnterSharedElementCallback(mCallback);
-            Slide slide = new Slide();
-            slide.setDuration(300);
-            getWindow().setEnterTransition(slide);
+           //Fade in content with imaged shared element transition
+            Fade fade = new Fade();
+            fade.setDuration(300);
+            getWindow().setEnterTransition(fade);
+
+            getWindow().setReturnTransition(fade);
 
             Transition transition = TransitionInflater.from(this).inflateTransition(R.transition.shared_element_photo);
             getWindow().setSharedElementEnterTransition(transition);
