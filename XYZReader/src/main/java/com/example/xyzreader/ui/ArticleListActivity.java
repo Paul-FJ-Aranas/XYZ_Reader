@@ -96,6 +96,9 @@ public class ArticleListActivity extends AppCompatActivity implements
 
     }
 
+    /*Good Shared Element Callback information available at
+      http://www.androiddesignpatterns.com/2014/12/activity-fragment-transitions-in-android-lollipop-part1.html
+      and slidenerd.com -- https://www.youtube.com/watch?v=K3yMV5am-Xo */
     //Callback to remap shared element transition
     private final SharedElementCallback mCallbackExit = new SharedElementCallback() {
         @Override
