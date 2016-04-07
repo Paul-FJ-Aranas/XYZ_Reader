@@ -94,6 +94,7 @@
         android:layout_marginRight="@dimen/fab_margin"
         android:contentDescription="@string/action_share"
         android:elevation="@dimen/fab_elevation"
+        app:borderWidth="0dp"
         android:translationZ="@dimen/fab_pressed_elevation"
         app:backgroundTint="@color/theme_accent"
         android:src="@drawable/ic_share" />
