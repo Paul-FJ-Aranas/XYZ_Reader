@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transitionSet
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="300">
+
+    <changeBounds />
+
+</transitionSet><!-- From: file:/C:/Users/PaulAranas/AndroidStudioProjects/xyzreader/XYZReader/src/main/res/transition/shared_element_photo.xml -->
